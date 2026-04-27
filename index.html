@@ -5,67 +5,499 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>APOLLINARIA SERDITOVA — Artist & Designer</title>
   <style>
+    :root {
+      --blue: #001eff;
+      --red: #e7352b;
+      --white: #ffffff;
+      --black: #0b0b0b;
+      --soft: #f6f4ef;
+      --line: rgba(11, 11, 11, 0.12);
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { font-family: Arial, Helvetica, sans-serif; background: #f4efe8; color: #111; overflow-x: hidden; }
-    .noise { position: fixed; inset: 0; pointer-events: none; opacity: 0.08; background-image: radial-gradient(#111 0.7px, transparent 0.7px); background-size: 14px 14px; z-index: 1000; }
-    header { position: fixed; top: 0; left: 0; width: 100%; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 24px 6vw; background: rgba(244,239,232,.78); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(17,17,17,.08); }
-    .logo { font-size: 15px; letter-spacing: .22em; text-transform: uppercase; font-weight: 700; }
-    nav { display: flex; gap: 28px; }
-    nav a { color: #111; text-decoration: none; font-size: 13px; text-transform: uppercase; letter-spacing: .12em; position: relative; }
-    nav a::after { content:""; position:absolute; left:0; bottom:-6px; width:0; height:1px; background:#111; transition:.3s; }
-    nav a:hover::after { width:100%; }
-    .hero { min-height:100vh; padding:150px 6vw 70px; display:grid; grid-template-columns:1.2fr .8fr; gap:50px; align-items:center; }
-    .hero h1 { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(58px, 11vw, 150px); line-height:.88; letter-spacing:-.07em; text-transform:uppercase; }
-    .hero h1 span { color:#123cff; font-style:italic; }
-    .hero-text p { max-width:540px; margin-top:34px; font-size:20px; line-height:1.45; }
-    .hero-buttons { margin-top:38px; display:flex; gap:14px; flex-wrap:wrap; }
-    .btn { display:inline-flex; align-items:center; justify-content:center; padding:15px 22px; border-radius:999px; text-decoration:none; font-size:13px; text-transform:uppercase; letter-spacing:.12em; transition:.25s; }
-    .btn.dark { background:#111; color:#fff; }
-    .btn.light { border:1px solid #111; color:#111; }
-    .btn:hover { transform: translateY(-3px); }
-    .hero-card { min-height:580px; border-radius:36px; background:#123cff; color:#fff; padding:34px; display:flex; flex-direction:column; justify-content:space-between; transform:rotate(2deg); box-shadow:0 30px 80px rgba(18,60,255,.28); position:relative; overflow:hidden; }
-    .hero-card::before { content:""; position:absolute; width:340px; height:340px; border-radius:50%; background:#f04f2f; right:-110px; top:-80px; mix-blend-mode:multiply; }
-    .hero-card::after { content:""; position:absolute; width:230px; height:230px; border-radius:50%; background:#f4efe8; left:-70px; bottom:-70px; opacity:.92; }
-    .hero-card-content { position:relative; z-index:2; }
-    .hero-card .label { font-size:13px; letter-spacing:.18em; text-transform:uppercase; }
-    .hero-card h2 { margin-top:220px; font-family:Georgia,'Times New Roman',serif; font-size:52px; line-height:.95; letter-spacing:-.04em; }
-    .section { padding:110px 6vw; border-top:1px solid rgba(17,17,17,.12); }
-    .section-title { display:grid; grid-template-columns:.6fr 1.4fr; gap:40px; margin-bottom:60px; }
-    .section-title small { font-size:13px; letter-spacing:.18em; text-transform:uppercase; color:#123cff; font-weight:700; }
-    .section-title h2 { font-family:Georgia,'Times New Roman',serif; font-size:clamp(42px,6vw,86px); line-height:.95; letter-spacing:-.05em; text-transform:uppercase; }
-    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:36px; }
-    .about-card { background:#fffaf3; border-radius:30px; padding:36px; min-height:260px; border:1px solid rgba(17,17,17,.08); }
-    .about-card p { font-size:19px; line-height:1.5; }
-    .big-number { font-family:Georgia,'Times New Roman',serif; font-size:86px; color:#123cff; line-height:1; margin-bottom:20px; }
-    .works-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
-    .work { min-height:420px; border-radius:30px; padding:24px; color:#fff; display:flex; flex-direction:column; justify-content:space-between; position:relative; overflow:hidden; transition:.3s; }
-    .work:hover { transform:translateY(-8px) rotate(-1deg); }
-    .work:nth-child(1){background:#111}.work:nth-child(2){background:#123cff}.work:nth-child(3){background:#f04f2f}.work:nth-child(4){background:#80614a}.work:nth-child(5){background:#262626}.work:nth-child(6){background:#d8b084;color:#111}
-    .work::before { content:""; position:absolute; width:210px; height:210px; border-radius:50%; background:rgba(255,255,255,.22); right:-60px; bottom:-70px; }
-    .work h3 { position:relative; z-index:2; font-family:Georgia,'Times New Roman',serif; font-size:34px; line-height:1; letter-spacing:-.04em; }
-    .work p { position:relative; z-index:2; font-size:14px; text-transform:uppercase; letter-spacing:.14em; }
-    .events { display:grid; gap:16px; }
-    .event { display:grid; grid-template-columns:160px 1fr 130px; align-items:center; gap:20px; padding:28px; background:#fffaf3; border-radius:24px; border:1px solid rgba(17,17,17,.08); }
-    .event-date { color:#123cff; font-weight:700; text-transform:uppercase; letter-spacing:.12em; font-size:13px; }
-    .event h3 { font-family:Georgia,'Times New Roman',serif; font-size:30px; letter-spacing:-.03em; }
-    .event-place { text-align:right; font-size:13px; text-transform:uppercase; letter-spacing:.12em; }
-    .contact { min-height:70vh; background:#111; color:#fff; border-top:none; }
-    .contact .section-title small { color:#f04f2f; }
-    .contact-links { display:flex; flex-wrap:wrap; gap:16px; margin-top:40px; }
-    .contact-links a { color:#fff; text-decoration:none; border:1px solid rgba(255,255,255,.35); border-radius:999px; padding:16px 22px; text-transform:uppercase; letter-spacing:.12em; font-size:13px; transition:.25s; }
-    .contact-links a:hover { background:#fff; color:#111; }
-    footer { background:#111; color:rgba(255,255,255,.55); padding:34px 6vw; display:flex; justify-content:space-between; gap:20px; font-size:12px; text-transform:uppercase; letter-spacing:.12em; }
-    @media (max-width:900px){ header{padding:18px 5vw} nav{display:none}.hero,.section-title,.about-grid{grid-template-columns:1fr}.hero{padding-top:120px}.hero-card{min-height:420px;transform:none}.hero-card h2{margin-top:150px;font-size:42px}.works-grid{grid-template-columns:1fr}.event{grid-template-columns:1fr}.event-place{text-align:left}footer{flex-direction:column} }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(0,0,0,0.12) 0.7px, transparent 0.7px);
+      background-size: 18px 18px;
+      opacity: 0.2;
+      z-index: 1000;
+    }
+
+    a { color: inherit; }
+
+    header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 100;
+      height: 76px;
+      padding: 0 5vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .logo {
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--blue);
+    }
+
+    nav { display: flex; gap: 26px; }
+    nav a {
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    nav a:hover { color: var(--red); }
+
+    .hero {
+      min-height: 100vh;
+      padding: 132px 5vw 66px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 54px;
+      align-items: center;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 34vw;
+      height: 34vw;
+      border-radius: 50%;
+      background: var(--blue);
+      right: -13vw;
+      top: 9vh;
+      z-index: -1;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--red);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 26px;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 58px;
+      height: 2px;
+      background: var(--red);
+    }
+
+    h1 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(62px, 11vw, 164px);
+      line-height: 0.84;
+      letter-spacing: -0.085em;
+      text-transform: uppercase;
+      max-width: 980px;
+    }
+
+    h1 span {
+      color: var(--blue);
+      font-style: italic;
+    }
+
+    .hero-text p {
+      max-width: 620px;
+      margin-top: 32px;
+      font-size: 20px;
+      line-height: 1.48;
+      color: #2f2f2f;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 36px;
+    }
+
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      font-size: 11px;
+      font-weight: 800;
+      transition: 0.25s;
+    }
+
+    .btn.blue { background: var(--blue); color: var(--white); }
+    .btn.red { background: var(--red); color: var(--white); }
+    .btn.outline { border: 1px solid var(--black); color: var(--black); background: var(--white); }
+    .btn:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.13); }
+
+    .hero-card {
+      min-height: 590px;
+      background: var(--blue);
+      color: var(--white);
+      border-radius: 34px;
+      box-shadow: 0 35px 90px rgba(0, 30, 255, 0.26);
+      position: relative;
+      overflow: hidden;
+      transform: rotate(1.2deg);
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .hero-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 30, 255, 0.72), rgba(0, 30, 255, 0.02));
+    }
+
+    .hero-card-content {
+      position: relative;
+      z-index: 2;
+      padding: 34px;
+    }
+
+    .hero-card small {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-weight: 800;
+    }
+
+    .hero-card h2 {
+      margin-top: 18px;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 50px;
+      line-height: 0.92;
+      letter-spacing: -0.055em;
+      max-width: 450px;
+    }
+
+    .marquee {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+      white-space: nowrap;
+      background: var(--soft);
+    }
+
+    .marquee div {
+      display: inline-block;
+      padding: 18px 0;
+      animation: move 24s linear infinite;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 30px;
+      letter-spacing: -0.03em;
+      color: var(--blue);
+    }
+
+    @keyframes move {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    section { padding: 112px 5vw; }
+
+    .section-title {
+      display: grid;
+      grid-template-columns: 0.46fr 1.54fr;
+      gap: 44px;
+      margin-bottom: 58px;
+    }
+
+    .section-title small {
+      color: var(--red);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 12px;
+      font-weight: 800;
+      padding-top: 14px;
+      border-top: 2px solid var(--red);
+    }
+
+    .section-title h2 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(44px, 6.8vw, 96px);
+      line-height: 0.9;
+      letter-spacing: -0.065em;
+      text-transform: uppercase;
+    }
+
+    .about-grid, .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .text-card {
+      background: var(--soft);
+      border-radius: 28px;
+      padding: 36px;
+      min-height: 280px;
+      border: 1px solid var(--line);
+    }
+
+    .text-card h3 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 38px;
+      line-height: 1;
+      letter-spacing: -0.045em;
+      color: var(--blue);
+      margin-bottom: 22px;
+    }
+
+    .text-card p, .text-card li {
+      font-size: 18px;
+      line-height: 1.56;
+      color: #2c2c2c;
+    }
+
+    .text-card ul { padding-left: 20px; }
+
+    .gallery-section {
+      background: var(--blue);
+      color: var(--white);
+    }
+
+    .gallery-section.graphics {
+      background: var(--white);
+      color: var(--black);
+    }
+
+    .gallery-section .section-title small {
+      color: var(--white);
+      border-color: var(--white);
+    }
+
+    .gallery-section.graphics .section-title small {
+      color: var(--red);
+      border-color: var(--red);
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .work {
+      background: var(--white);
+      color: var(--black);
+      border-radius: 30px;
+      overflow: hidden;
+      transition: 0.3s;
+    }
+
+    .graphics .work {
+      background: var(--soft);
+      border: 1px solid var(--line);
+    }
+
+    .work:hover {
+      transform: translateY(-8px) rotate(-0.4deg);
+      box-shadow: 0 26px 70px rgba(0,0,0,0.22);
+    }
+
+    .work-image {
+      height: 390px;
+      background: var(--soft);
+      overflow: hidden;
+    }
+
+    .work-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: 0.45s;
+    }
+
+    .work:hover .work-image img {
+      transform: scale(1.04);
+    }
+
+    .work-body {
+      padding: 26px;
+    }
+
+    .work-body h3 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 31px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      margin-bottom: 12px;
+    }
+
+    .work-body p {
+      font-size: 15px;
+      line-height: 1.45;
+      color: #4a4a4a;
+      margin-bottom: 20px;
+    }
+
+    .events-list {
+      display: grid;
+      gap: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .event {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 36px;
+      padding: 30px 0;
+      border-bottom: 1px solid var(--line);
+      align-items: baseline;
+    }
+
+    .event-date {
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .event h3 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(27px, 3vw, 44px);
+      line-height: 1;
+      letter-spacing: -0.05em;
+      font-weight: 400;
+    }
+
+    .contact {
+      background: var(--black);
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact::before {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: var(--blue);
+      right: -160px;
+      top: -120px;
+    }
+
+    .contact::after {
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: var(--red);
+      left: 5vw;
+      bottom: -70px;
+    }
+
+    .contact > * { position: relative; z-index: 2; }
+    .contact .section-title small { color: var(--red); border-color: var(--red); }
+
+    .contact p {
+      max-width: 780px;
+      color: rgba(255,255,255,0.78);
+      font-size: 22px;
+      line-height: 1.45;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 38px;
+    }
+
+    .contact-links a {
+      color: var(--white);
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.45);
+      padding: 15px 20px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .contact-links a:hover { background: var(--white); color: var(--black); }
+
+    footer {
+      background: var(--black);
+      color: rgba(255,255,255,0.55);
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding: 32px 5vw;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 12px;
+    }
+
+    @media (max-width: 950px) {
+      header { height: 68px; padding: 0 5vw; }
+      nav { display: none; }
+      .hero, .section-title, .about-grid, .services-grid, .works-grid, .event { grid-template-columns: 1fr; }
+      .hero { padding-top: 118px; }
+      .hero::after { width: 86vw; height: 86vw; right: -50vw; top: 150px; }
+      .hero-card { min-height: 520px; transform: none; }
+      .hero-card h2 { font-size: 42px; }
+      section { padding: 86px 5vw; }
+      .marquee div { font-size: 24px; }
+      .work-image { height: 430px; }
+      footer { flex-direction: column; }
+    }
   </style>
 </head>
+
 <body>
-  <div class="noise"></div>
   <header>
-    <div class="logo">APOLLINARIA</div>
+    <div class="logo">APOLLINARIA SERDITOVA</div>
     <nav>
       <a href="#about">Обо мне</a>
-      <a href="#works">Работы</a>
+      <a href="#painting">Живопись</a>
+      <a href="#graphics">Графика</a>
+      <a href="#services">Услуги</a>
       <a href="#events">Мероприятия</a>
       <a href="#contact">Контакты</a>
     </nav>
@@ -74,61 +506,243 @@
   <main>
     <section class="hero">
       <div class="hero-text">
-        <h1>Artist<br><span>&</span><br>Designer</h1>
-        <p>APOLLINARIA SERDITOVA — художник и дизайнер. Автор визуальных миров, где ультрамарин, фактура, детская свобода рисунка и современный интерьер встречаются в одном сильном стиле.</p>
-        <div class="hero-buttons">
-          <a class="btn dark" href="#works">Смотреть работы</a>
-          <a class="btn light" href="#contact">Связаться</a>
+        <div class="kicker">Artist / Designer / Visual Code</div>
+        <h1>Apollinaria<br><span>Serditova</span></h1>
+        <p>
+          Современный художник и дизайнер. Живопись, графика, арт-объекты и визуальные
+          концепции. Основной язык работ — ультрамарин, красный, свет и городская атмосфера.
+        </p>
+        <div class="buttons">
+          <a class="btn blue" href="#painting">Живопись</a>
+          <a class="btn red" href="#graphics">Графика</a>
+          <a class="btn outline" href="#contact">Связаться</a>
         </div>
       </div>
+
       <div class="hero-card">
+        <img src="images/portrait.jpg" alt="APOLLINARIA SERDITOVA">
         <div class="hero-card-content">
-          <div class="label">Portfolio / Visual Identity</div>
-          <h2>Bold art for spaces, brands and objects.</h2>
+          <small>Artist portrait / Studio</small>
+          <h2>Искусство как личный визуальный код.</h2>
         </div>
       </div>
     </section>
 
-    <section class="section" id="about">
-      <div class="section-title"><small>01 / Обо мне</small><h2>Художник с собственным визуальным языком</h2></div>
+    <div class="marquee">
+      <div>
+        APOLLINARIA SERDITOVA — PAINTING — GRAPHICS — ULTRAMARINE WORLD — CONTEMPORARY ART — APOLLINARIA SERDITOVA — PAINTING — GRAPHICS — ULTRAMARINE WORLD —
+      </div>
+    </div>
+
+    <section id="about">
+      <div class="section-title">
+        <small>01 / Обо мне</small>
+        <h2>Художник с собственным визуальным языком</h2>
+      </div>
       <div class="about-grid">
-        <div class="about-card"><p>Я родом из Республики Коми, города Сыктывкара. Мой путь начался в школе искусств, конкурсах и выставках. Позже я переехала в Санкт-Петербург и получила магистерскую степень в РГПУ им. А. И. Герцена на факультете изобразительного искусства.</p></div>
-        <div class="about-card"><div class="big-number">13+</div><p>Лет в творческой сфере: живопись, графика, интерьерные решения, арт-объекты, принты, визуальные концепции и авторский стиль для проектов.</p></div>
+        <div class="text-card">
+          <h3>Биография</h3>
+          <p>
+            Я — художник родом из Республики Коми, города Сыктывкара. Мой путь начался
+            в школе искусств, где я участвовала в творческих конкурсах и развивала
+            собственный художественный язык.
+          </p>
+        </div>
+        <div class="text-card">
+          <h3>Образование</h3>
+          <p>
+            В 2014 году я переехала в Санкт-Петербург и получила магистерскую степень
+            в РГПУ им. А. И. Герцена на факультете изобразительного искусства. Сейчас
+            работаю с живописью, графикой, дизайном и арт-проектами.
+          </p>
+        </div>
       </div>
     </section>
 
-    <section class="section" id="works">
-      <div class="section-title"><small>02 / Работы</small><h2>Избранные направления</h2></div>
+    <section class="gallery-section" id="painting">
+      <div class="section-title">
+        <small>02 / Живопись</small>
+        <h2>Живопись, которую можно купить</h2>
+      </div>
       <div class="works-grid">
-        <article class="work"><p>Painting</p><h3>Живопись и цветовые серии</h3></article>
-        <article class="work"><p>Interior</p><h3>Арт для интерьеров</h3></article>
-        <article class="work"><p>Textile</p><h3>Принты и вышивка</h3></article>
-        <article class="work"><p>Objects</p><h3>Авторские предметы</h3></article>
-        <article class="work"><p>Graphic</p><h3>Графика и иллюстрации</h3></article>
-        <article class="work"><p>Brand</p><h3>Визуальные концепции</h3></article>
+        <article class="work">
+          <div class="work-image"><img src="images/painting_shoes.png" alt="Серия «Туфли»"></div>
+          <div class="work-body">
+            <h3>Серия «Туфли»</h3>
+            <p>Живопись, цена по запросу</p>
+            <a class="btn red" href="https://t.me/poolikkk" target="_blank">Купить</a>
+          </div>
+        </article>
+<article class="work">
+          <div class="work-image"><img src="images/painting_moskovsky.png" alt="Московский проспект"></div>
+          <div class="work-body">
+            <h3>Московский проспект</h3>
+            <p>Живопись, цена по запросу</p>
+            <a class="btn red" href="https://t.me/poolikkk" target="_blank">Купить</a>
+          </div>
+        </article>
+<article class="work">
+          <div class="work-image"><img src="images/painting_arch.png" alt="Вечерние мгновения"></div>
+          <div class="work-body">
+            <h3>Вечерние мгновения</h3>
+            <p>Живопись, цена по запросу</p>
+            <a class="btn red" href="https://t.me/poolikkk" target="_blank">Купить</a>
+          </div>
+        </article>
+<article class="work">
+          <div class="work-image"><img src="images/painting_window.png" alt="Окно"></div>
+          <div class="work-body">
+            <h3>Окно</h3>
+            <p>Живопись, цена по запросу</p>
+            <a class="btn red" href="https://t.me/poolikkk" target="_blank">Купить</a>
+          </div>
+        </article>
+<article class="work">
+          <div class="work-image"><img src="images/painting_kiss.jpg" alt="Поцелуй"></div>
+          <div class="work-body">
+            <h3>Поцелуй</h3>
+            <p>Живопись, цена по запросу</p>
+            <a class="btn red" href="https://t.me/poolikkk" target="_blank">Купить</a>
+          </div>
+        </article>
+<article class="work">
+          <div class="work-image"><img src="images/painting_portrait.jpg" alt="Городской портрет"></div>
+          <div class="work-body">
+            <h3>Городской портрет</h3>
+            <p>Живопись, цена по запросу</p>
+            <a class="btn red" href="https://t.me/poolikkk" target="_blank">Купить</a>
+          </div>
+        </article>
       </div>
     </section>
 
-    <section class="section" id="events">
-      <div class="section-title"><small>03 / Мероприятия</small><h2>Выставки, коллаборации и события</h2></div>
-      <div class="events">
-        <div class="event"><div class="event-date">2026</div><h3>Персональная выставка</h3><div class="event-place">Coming soon</div></div>
-        <div class="event"><div class="event-date">2026</div><h3>Арт-коллаборация с брендом</h3><div class="event-place">Studio</div></div>
-        <div class="event"><div class="event-date">2026</div><h3>Открытая мастерская</h3><div class="event-place">Saint Petersburg</div></div>
+    <section class="gallery-section graphics" id="graphics">
+      <div class="section-title">
+        <small>03 / Графика</small>
+        <h2>Графика и офорты</h2>
+      </div>
+      <div class="works-grid">
+        <article class="work">
+          <div class="work-image"><img src="images/graphic_singer.png" alt="Дом Зингера"></div>
+          <div class="work-body">
+            <h3>Дом Зингера</h3>
+            <p>Графика / офорт, цена по запросу</p>
+            <a class="btn red" href="https://t.me/poolikkk" target="_blank">Купить</a>
+          </div>
+        </article>
+<article class="work">
+          <div class="work-image"><img src="images/graphic_tree.jpg" alt="Город и дерево"></div>
+          <div class="work-body">
+            <h3>Город и дерево</h3>
+            <p>Графика, цена по запросу</p>
+            <a class="btn red" href="https://t.me/poolikkk" target="_blank">Купить</a>
+          </div>
+        </article>
+<article class="work">
+          <div class="work-image"><img src="images/graphic_arch.png" alt="Арка"></div>
+          <div class="work-body">
+            <h3>Арка</h3>
+            <p>Офорт, цена по запросу</p>
+            <a class="btn red" href="https://t.me/poolikkk" target="_blank">Купить</a>
+          </div>
+        </article>
+<article class="work">
+          <div class="work-image"><img src="images/graphic_sink.png" alt="Натюрморт"></div>
+          <div class="work-body">
+            <h3>Натюрморт</h3>
+            <p>Офорт, цена по запросу</p>
+            <a class="btn red" href="https://t.me/poolikkk" target="_blank">Купить</a>
+          </div>
+        </article>
+<article class="work">
+          <div class="work-image"><img src="images/graphic_sweden.png" alt="Швеция"></div>
+          <div class="work-body">
+            <h3>Швеция</h3>
+            <p>Офорт, цена по запросу</p>
+            <a class="btn red" href="https://t.me/poolikkk" target="_blank">Купить</a>
+          </div>
+        </article>
+<article class="work">
+          <div class="work-image"><img src="images/graphic_stilllife.png" alt="Натюрморт"></div>
+          <div class="work-body">
+            <h3>Натюрморт</h3>
+            <p>Графика, цена по запросу</p>
+            <a class="btn red" href="https://t.me/poolikkk" target="_blank">Купить</a>
+          </div>
+        </article>
+<article class="work">
+          <div class="work-image"><img src="images/graphic_triptych.png" alt="Петербургский триптих"></div>
+          <div class="work-body">
+            <h3>Петербургский триптих</h3>
+            <p>Графика, серия, цена по запросу</p>
+            <a class="btn red" href="https://t.me/poolikkk" target="_blank">Купить</a>
+          </div>
+        </article>
       </div>
     </section>
 
-    <section class="section contact" id="contact">
-      <div class="section-title"><small>04 / Контакты</small><h2>Давайте сделаем что-то красивое</h2></div>
-      <p style="max-width:680px;font-size:20px;line-height:1.5;color:rgba(255,255,255,.78)">Для заказов, коллабораций, выставок и интерьерных проектов напишите мне в Instagram, Telegram или на почту.</p>
+    <section class="services" id="services">
+      <div class="section-title">
+        <small>04 / Услуги</small>
+        <h2>Что можно заказать</h2>
+      </div>
+      <div class="services-grid">
+        <div class="text-card">
+          <h3>Искусство</h3>
+          <ul>
+            <li>Авторские картины</li>
+            <li>Работы на заказ</li>
+            <li>Арт для интерьеров</li>
+            <li>Серии работ для пространств</li>
+          </ul>
+        </div>
+        <div class="text-card">
+          <h3>Дизайн</h3>
+          <ul>
+            <li>Принты для одежды и текстиля</li>
+            <li>Визуальные концепции</li>
+            <li>Арт-коллаборации с брендами</li>
+            <li>Оформление выставок и мероприятий</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="events">
+      <div class="section-title">
+        <small>05 / Мероприятия</small>
+        <h2>Выставки, резиденции и публикации</h2>
+      </div>
+      <div class="events-list">
+        <div class="event"><div class="event-date">2023—2024</div><h3>Участница арт-резиденции “Mauvais yon”.</h3></div>
+        <div class="event"><div class="event-date">Декабрь 2023</div><h3>Участие в выставке Pop-up ENCHANTE.</h3></div>
+        <div class="event"><div class="event-date">Апрель 2024</div><h3>Персональная выставка «Вечерние мгновения: жизнь после работы» в Mauvais Ton.</h3></div>
+        <div class="event"><div class="event-date">2025</div><h3>Участие в фестивале «Бумага Фест», г. Вологда.</h3></div>
+        <div class="event"><div class="event-date">2025</div><h3>Участие в выставке «Мокрый пол», г. Санкт-Петербург.</h3></div>
+        <div class="event"><div class="event-date">Апрель 2026</div><h3>Публикация в нью-йоркском журнале Visual Art Journal.</h3></div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="section-title">
+        <small>06 / Контакты</small>
+        <h2>Связаться и купить работу</h2>
+      </div>
+      <p>
+        Для покупки работ, коллабораций, выставок, оформления пространств и индивидуальных
+        заказов напишите мне в Instagram, Telegram или на почту.
+      </p>
       <div class="contact-links">
-        <a href="https://instagram.com/" target="_blank">Instagram</a>
-        <a href="https://t.me/" target="_blank">Telegram</a>
-        <a href="mailto:hello@apolli.art">hello@apolli.art</a>
+        <a href="https://instagram.com/poolikkk" target="_blank">Instagram @poolikkk</a>
+        <a href="https://t.me/poolikkk" target="_blank">Telegram @poolikkk</a>
+        <a href="mailto:polinaserd.art@gmail.com">polinaserd.art@gmail.com</a>
       </div>
     </section>
   </main>
 
-  <footer><div>© 2026 APOLLINARIA SERDITOVA</div><div>Artist & Designer</div></footer>
+  <footer>
+    <div>© 2026 APOLLINARIA SERDITOVA</div>
+    <div>Artist & Designer</div>
+  </footer>
 </body>
 </html>
